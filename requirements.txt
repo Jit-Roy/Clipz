@@ -1,0 +1,37 @@
+# Core Dependencies
+numpy>=1.24.0
+scipy>=1.10.0
+opencv-python>=4.8.0
+librosa>=0.10.0
+soundfile>=0.12.0
+
+# Deep Learning
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+tensorflow-hub>=0.15.0
+
+# Video Processing
+moviepy>=1.0.3
+ffmpeg-python>=0.2.0
+ultralytics>=8.0.0
+
+# Audio & Speech Analysis
+whisper>=1.0.0
+openai-whisper>=20231117
+praat-parselmouth>=0.4.3
+ruptures>=1.1.9
+
+# Computer Vision
+dlib>=19.24.0
+Pillow>=10.0.0
+
+# LLM Integration
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Utilities
+tqdm>=4.65.0
+
+# Optional: For visualization
+matplotlib>=3.7.0
