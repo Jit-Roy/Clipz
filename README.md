@@ -1,6 +1,6 @@
 # Clipz - Turn long videos into viral clips automatically.
 
-![Viral Clip Extractor](doc/img.png)
+![Viral Clip Extractor](docs/img.png)
 
 <p align="center">
   <b>AI-powered instruction-driven multimodal video clip extraction</b><br/>
@@ -50,7 +50,7 @@ So clips aren’t just *popular* — they’re **exactly aligned with your instr
 
 ## Quick Start
 
-👉 **New to this project?** Check out the [Quick Start Guide](doc/QUICKSTART.md) for installation and first run in 5 minutes!
+👉 **New to this project?** Check out the [Quick Start Guide](docs/QUICKSTART.md) for installation and first run in 5 minutes!
 
 ## Features
 
@@ -390,7 +390,7 @@ We're excited about these features and welcome contributions! If you're interest
 
 ## Contributing
 
-Contributions welcome! Please read our [Contributing Guidelines](doc/CONTRIBUTING.md) for details on how to submit pull requests, report issues, and contribute to the project.
+Contributions welcome! Please read our [Contributing Guidelines](docs/CONTRIBUTING.md) for details on how to submit pull requests, report issues, and contribute to the project.
 
 ## Acknowledgments
 

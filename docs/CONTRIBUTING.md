@@ -5,14 +5,14 @@ Thank you for your interest in contributing! This document provides guidelines f
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/yourusername/clip-extract.git`
+2. Clone your fork: `git clone https://github.com/Jit-Roy/Clipz.git`
 3. Create a virtual environment: `python -m venv venv`
 4. Activate it and install dependencies: `pip install -r requirements.txt`
 5. Install development dependencies: `pip install -e ".[dev]"`
 
 ## Development Workflow
 
-1. Create a new branch for your feature: `git checkout -b feature/your-feature-name`
+1. Create a new branch for your feature: `git checkout -b feature/feature-name`
 2. Make your changes
 3. Test your changes thoroughly
 4. Commit with clear, descriptive messages
