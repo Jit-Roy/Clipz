@@ -1,8 +1,52 @@
-# Clipz
+# Clipz - Turn long videos into viral clips automatically.
 
 ![Viral Clip Extractor](doc/img.png)
 
-Clipz is an AI-powered multimodal clip extractor that turns long, boring videos into clean, viral-ready highlights by combining audio energy, visual signals, speech understanding, and LLM reasoning—just tell it what you want like “extract the funniest moments” or “only clip Speaker B” and it handles everything automatically, no manual scrubbing, no awkward cuts, no mid-sentence clips, just smart, context-aware highlights built for podcasts, interviews, debates, and reaction content that’s meant to pop off.
+<p align="center">
+  <b>AI-powered instruction-driven multimodal video clip extraction</b><br/>
+  Audio • Visual • Speech • LLM Reasoning
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8+-blue" alt="Python 3.8+"/>
+  <img src="https://img.shields.io/badge/LLM-Powered-purple" alt="LLM Powered"/>
+  <img src="https://img.shields.io/badge/Multimodal-Audio%20%7C%20Video%20%7C%20Text-orange" alt="Multimodal"/>
+  <img src="https://img.shields.io/badge/Status-Active-success" alt="Active"/>
+</p>
+
+<p align="center">
+  <a href="#quick-start">⚡ Quick Start</a> •
+  <a href="#-why-clipz">🤔 Why Clipz?</a> •
+  <a href="#features">✨ Features</a> •
+  <a href="#api-reference">📚 API</a> •
+  <a href="#future-roadmap">🚀 Roadmap</a>
+</p>
+
+---
+
+## 🤔 Why Clipz?
+
+Many existing clip tools already do a great job with:
+- audio-based excitement detection  
+- visual motion & scene analysis  
+- even basic LLM-assisted highlight detection  
+
+**Clipz goes one step further — it’s instruction-driven.**
+
+Instead of passively finding “hot moments,” you tell the system *what you want*:
+- *“Extract the funniest moments”*
+- *“Only clip Speaker B”*
+- *“Find emotionally intense reactions”*
+
+An LLM interprets your intent and grounds it using:
+✔ audio cues & prosody  
+✔ visual signals & scene context  
+✔ sentence-aware transcription  
+
+So clips aren’t just *popular* — they’re **exactly aligned with your instruction**.
+
+---
+
 
 ## Quick Start
 
@@ -293,8 +337,6 @@ Videos longer than 1 hour may consume significant processing time (30-60+ minute
 - Ensure sufficient RAM (16GB+ recommended for 1-hour videos)
 
 ## Future Roadmap
-
-### 🎯 Planned Enhancements
 
 #### 1️⃣ Speaker-Aware Extraction
 - **Speaker Diarization**: Integrate `pyannote.audio` or `SpeechBrain` to segment clips per speaker
