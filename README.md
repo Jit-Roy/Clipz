@@ -1,17 +1,19 @@
-# Viral Clip Extractor
+# Clipz
 
-An AI-powered multimodal video clip extraction system that identifies viral-worthy moments using audio analysis, visual analysis, speech transcription, and LLM-based semantic understanding.
+![Viral Clip Extractor](doc/img.png)
+
+Clipz is an AI-powered multimodal clip extractor that turns long, boring videos into clean, viral-ready highlights by combining audio energy, visual signals, speech understanding, and LLM reasoning—just tell it what you want like “extract the funniest moments” or “only clip Speaker B” and it handles everything automatically, no manual scrubbing, no awkward cuts, no mid-sentence clips, just smart, context-aware highlights built for podcasts, interviews, debates, and reaction content that’s meant to pop off.
 
 ## Quick Start
 
-👉 **New to this project?** Check out the [Quick Start Guide](QUICKSTART.md) for a 5-minute setup!
+👉 **New to this project?** Check out the [Quick Start Guide](doc/QUICKSTART.md) for a 5-minute setup!
 
 ## Features
 
 - 🎵 **Audio Analysis**: Multi-scale loudness, spectral novelty, rhythm detection, prosody analysis
 - 🎬 **Video Analysis**: Motion tracking, semantic surprise (CLIP), composition scoring, shot detection
 - 🗣️ **Transcription**: Automatic speech-to-text with timestamps using Whisper
-- 🤖 **LLM Intelligence**: Smart clip selection and merging using GPT-4
+- 🤖 **LLM Intelligence**: Instruction Driven Clip Extraction
 - ⚡ **Parallel Processing**: Fast multi-threaded feature extraction
 - 💾 **Caching**: Intelligent feature caching for faster re-runs
 
@@ -19,33 +21,9 @@ An AI-powered multimodal video clip extraction system that identifies viral-wort
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.11
 - FFmpeg installed and available in PATH
 - OpenRouter API key (for LLM features)
-
-### Setup
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd Clip_Extract
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Download YOLO model (if not included)
-# The yolov8n.pt model should be placed in the models/ folder
-# It will be downloaded automatically on first use if not present
-```
 
 ### Environment Configuration
 
@@ -303,13 +281,85 @@ Try:
 - Processing shorter videos
 - Closing other applications
 
+## Known Limitations
+
+### Multi-Language Videos
+Videos containing multiple languages may produce unexpected clips because Whisper translates everything into English by default. This can result in:
+- Loss of context from non-English speech
+- Incorrect clip boundaries due to translation timing differences
+- Mixed language content being merged incorrectly
+
+**Workaround**: For better results with multi-language content, process each language segment separately or use the `task="transcribe"` parameter to keep original language.
+
+### Long Video Processing
+Videos longer than 1 hour may consume significant processing time (30-60+ minutes depending on hardware):
+- Audio feature extraction scales with video duration
+- Video analysis requires processing thousands of frames
+- LLM analysis has context window limits for very long videos
+
+**Tips for long videos**:
+- Use lower `target_fps` (1 instead of 2) for faster processing
+- Enable caching to avoid re-processing if you need to re-run
+- Consider splitting very long videos into smaller segments
+- Ensure sufficient RAM (16GB+ recommended for 1-hour videos)
+
+## Future Roadmap
+
+### 🎯 Planned Enhancements
+
+#### 1️⃣ Speaker-Aware Extraction
+- **Speaker Diarization**: Integrate `pyannote.audio` or `SpeechBrain` to segment clips per speaker
+- **Speaker Queries**: Enable queries like "Give me all clips where speaker X is explaining something" or "Combine all funny reactions of speaker Y"
+- **Speaker Embeddings**: Integrate speaker identity into LLM scoring for intelligent semantic merges based on who's speaking
+- **Multi-speaker Analysis**: Track speaker transitions and dialogue patterns for better clip boundaries
+
+#### 2️⃣ Emotion / Excitement Detection
+- **Emotion Recognition**: Train or integrate pre-trained models for emotion/intensity detection beyond generic audio peaks
+- **Engagement Scoring**: Guide LLM to rank clips not only by volume/motion but by perceived emotional engagement
+- **Sentiment Analysis**: Combine audio emotion with transcript sentiment for deeper understanding
+- **Facial Expression Analysis**: Detect smiles, laughter, surprise in video frames to enhance excitement scoring
+
+#### 3️⃣ Adaptive Clip Duration
+- **Platform Presets**: User-specified clip length preferences (short for TikTok/Reels, longer for podcasts/YouTube)
+- **Intelligent Merging**: LLM can merge multiple peaks while respecting target duration constraints
+- **Dynamic Segmentation**: Automatically adjust clip boundaries based on content density and pacing
+- **Custom Templates**: Save and reuse clip duration strategies for different content types
+
+#### 4️⃣ Content-Type Tuning
+- **Auto-Classification**: Detect content type (comedy, sports, interview, tutorial, etc.) and adjust fusion weights accordingly
+  - Stand-up comedy → Audio-heavy (0.7 audio, 0.3 video)
+  - Sports/Gaming → Video-heavy (0.3 audio, 0.7 video)
+  - Interviews/Podcasts → Balanced (0.5 audio, 0.5 video)
+- **Genre-Specific Models**: Fine-tune excitement scoring for different video genres
+- **Context-Aware Features**: Enable/disable specific features based on content type
+
+#### 5️⃣ Real-Time / Streaming Mode
+- **Live Stream Support**: Extract highlights on-the-fly from live streams or ongoing recordings
+- **Streaming Inference**: Fast scoring models optimized for real-time processing
+- **Incremental LLM Prompts**: Streaming-friendly LLM prompt design for progressive clip selection
+- **Buffer Management**: Smart windowing for continuous audio/video analysis
+
+#### 6️⃣ Auto-Subtitle / Captioning Integration
+- **Forced Alignment**: Combine transcript with precise word-level timestamps
+- **Subtitle Generation**: Auto-generate SRT/VTT files for each extracted clip
+- **Multi-Language Support**: Transcribe and caption in multiple languages
+- **Styling Options**: Customizable subtitle appearance for different platforms (TikTok, YouTube Shorts, Instagram)
+- **Accessibility**: Ensure all clips are accessible with proper closed captions
+
+### 🚀 Community Contributions Welcome!
+
+We're excited about these features and welcome contributions! If you're interested in implementing any of these enhancements, please:
+1. Open an issue to discuss your approach
+2. Fork the repository and create a feature branch
+3. Submit a pull request with comprehensive tests
+
 ## License
 
 [MIT License](LICENSE) - see the LICENSE file for details.
 
 ## Contributing
 
-Contributions welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and contribute to the project.
+Contributions welcome! Please read our [Contributing Guidelines](doc/CONTRIBUTING.md) for details on how to submit pull requests, report issues, and contribute to the project.
 
 ## Acknowledgments
 

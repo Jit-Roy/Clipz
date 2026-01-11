@@ -12,7 +12,8 @@ Get started with Viral Clip Extractor in 5 minutes!
 
 ```bash
 # 1. Clone or download the project
-cd Clip_Extract
+git clone https://github.com/Jit-Roy/Clipz.git
+cd Clipz
 
 # 2. Create virtual environment
 python -m venv venv
@@ -104,9 +105,20 @@ for clip in results["clips"]:
 
 After processing, you'll find:
 
-1. **Clips**: `output/clips_<timestamp>/clip_001.mp4`, etc.
-2. **Metadata**: `output/clips_<timestamp>/clip_001.json` for each clip
-3. **Analysis**: `output/analysis_<timestamp>.json` with complete results
+### Video Clips
+- **Location**: `output/clips_<timestamp>/`
+- **Files**: `clip_001.mp4`, `clip_002.mp4`, etc.
+- These are the extracted video clips ready to use!
+
+### Metadata & Cache (in `.cache/` folder)
+1. **Clip Metadata**: `.cache/metadata/clip_001_<timestamp>.json` for each clip
+   - Contains: start/end times, duration, transcript, interest score, reason, tags
+2. **Analysis Report**: `.cache/analysis/analysis_<timestamp>.json`
+   - Complete analysis metadata, candidate clips, final selections
+3. **Feature Cache**: `.cache/audio/` and `.cache/video/`
+   - Cached audio/video features for faster re-runs on same video
+
+**Clean Output**: Only video clips go in `output/` folder. All metadata and cache files are organized in `.cache/` to keep things tidy!
 
 ## Troubleshooting
 
@@ -140,4 +152,4 @@ Try lowering FPS: `--fps 1` or process shorter videos.
   - Action videos: Higher video weight
   - Interviews: Balanced weights
 
-Happy clipping! 🎬
+Happy clipping !!!
