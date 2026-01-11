@@ -6,140 +6,124 @@ Clipz is an AI-powered multimodal clip extractor that turns long, boring videos 
 
 ## Quick Start
 
-👉 **New to this project?** Check out the [Quick Start Guide](doc/QUICKSTART.md) for a 5-minute setup!
+👉 **New to this project?** Check out the [Quick Start Guide](doc/QUICKSTART.md) for installation and first run in 5 minutes!
 
 ## Features
 
-- 🎵 **Audio Analysis**: Multi-scale loudness, spectral novelty, rhythm detection, prosody analysis
-- 🎬 **Video Analysis**: Motion tracking, semantic surprise (CLIP), composition scoring, shot detection
-- 🗣️ **Transcription**: Automatic speech-to-text with timestamps using Whisper
-- 🤖 **LLM Intelligence**: Instruction Driven Clip Extraction
-- ⚡ **Parallel Processing**: Fast multi-threaded feature extraction
-- 💾 **Caching**: Intelligent feature caching for faster re-runs
+### Core Capabilities
 
-## Installation
+- 🎵 **Multi-Scale Audio Analysis**: Detects excitement through loudness, spectral novelty, rhythm, prosody, and semantic events (laughter, applause)
+- 🎬 **Advanced Visual Analysis**: Tracks motion, semantic surprise (CLIP), composition quality, shot boundaries, and face detection
+- 🗣️ **Speech Transcription**: Word-level timestamps using Whisper, respects sentence boundaries for natural clips
+- 🤖 **LLM-Powered Intelligence**: Instruction-driven clip extraction with semantic merging and context-aware ranking
+- ⚡ **Parallel Processing**: Multi-threaded feature extraction with automatic caching
+- 🎯 **Smart Clip Boundaries**: Never cuts mid-sentence, aligns to natural speech segments
 
-### Prerequisites
+## API Reference
 
-- Python 3.11
-- FFmpeg installed and available in PATH
-- OpenRouter API key (for LLM features)
-
-### Environment Configuration
-
-Create a `.env` file in the project root:
-
-```env
-OPENROUTER_API_KEY=your_api_key_here
-```
-
-## Quick Start
-
-### Command Line Usage
-
-```bash
-# Basic usage - extract 10 clips
-python main.py path/to/video.mp4
-
-# Custom query
-python main.py video.mp4 --query "give me 5 funny moments"
-
-# Adjust weights
-python main.py video.mp4 --audio-weight 0.7 --video-weight 0.3
-
-# Custom settings
-python main.py video.mp4 --fps 3 --min-duration 10 --max-duration 45
-```
-
-### Python API Usage
+### Main Pipeline (`main.py`)
 
 ```python
-from main import ClipExtractor
+from main import ViralClipExtractor
 
-# Initialize extractor
-extractor = ClipExtractor(
-    audio_weight=0.5,
-    video_weight=0.5,
-    use_cache=True,
-    output_dir="output"
+# Initialize with custom weights
+extractor = ViralClipExtractor(
+    audio_weight=0.5,      # 0-1, weight for audio excitement
+    video_weight=0.5,      # 0-1, weight for visual excitement
+    use_cache=True,        # Cache features for faster re-runs
+    output_dir="output"    # Output directory
 )
 
-# Process video
+# Process video end-to-end
 results = extractor.process(
     video_path="video.mp4",
-    user_query="give me 10 interesting clips",
-    target_fps=2,
-    min_duration=5,
-    max_duration=60,
-    export=True
+    user_query="give me 10 interesting clips",  # Natural language query
+    target_fps=2,          # Video analysis FPS (lower=faster)
+    min_duration=5,        # Minimum clip length (seconds)
+    max_duration=60,       # Maximum clip length (seconds)
+    export=True            # Export video files
 )
 
 # Access results
 for clip in results["clips"]:
-    print(f"Clip: {clip['start']:.1f}s - {clip['end']:.1f}s")
+    print(f"Time: {clip['start']:.1f}s - {clip['end']:.1f}s")
     print(f"Transcript: {clip['transcript']}")
-    print(f"Interest Score: {clip['llm_interest_score']}/10")
+    print(f"Score: {clip['llm_interest_score']}/10")
+    print(f"Reason: {clip['reason']}")
+    print(f"Tags: {clip['tags']}")
 ```
 
-## Modules
+### Individual Modules
 
-### Audio Analysis (`audio.py`)
+#### Audio Analysis (`Audio/audio.py`)
 
-Analyzes audio for excitement signals:
-- Loudness and energy analysis
-- Spectral novelty detection (MFCC)
-- Rhythm and onset detection
-- Prosody and emotion analysis
-- Silence contrast detection
-- Structural boundary detection
+**Features Extracted:**
+- Multi-scale loudness (short/long-term RMS)
+- Spectral novelty via MFCC delta
+- Rhythm variance and onset strength
+- Silence contrast and dramatic pauses
+- Structural boundaries (change-point detection)
+- Semantic events (laughter, applause, cheering) via YAMNet
 
 ```python
-from audio import ClipAudio
+from Audio.audio import ClipAudio
 
-detector = ClipAudio(sr=16000)
-timestamps, scores = detector.compute_audio_scores("audio.wav")
+detector = ClipAudio(sr=16000)  # 16kHz optimized for speed
+timestamps, scores = detector.compute_audio_scores(
+    audio_path="audio.wav",
+    use_cache=True
+)
 ```
 
-### Video Analysis (`video.py`)
+#### Video Analysis (`video/video.py`)
 
-Analyzes video for visual excitement:
-- Optical flow motion analysis
-- Semantic surprise using CLIP embeddings
+**Features Extracted:**
+- Optical flow motion magnitude
+- CLIP semantic surprise detection
 - Composition scoring (rule of thirds)
 - Shot boundary detection
 - Face detection and tracking
 - Temporal rhythm analysis
 
 ```python
-from video import ClipVideo
+from video.video import ClipVideo
 
 detector = ClipVideo()
-timestamps, scores = detector.compute_visual_scores("video.mp4", target_fps=2)
+timestamps, scores = detector.compute_visual_scores(
+    video_path="video.mp4",
+    target_fps=2,
+    use_cache=True
+)
 ```
 
-### Transcription (`transcribe.py`)
+#### Transcription (`Transcription/transcribe.py`)
 
-Speech-to-text with timestamps:
+**Returns:** List of sentence segments with timestamps
 
 ```python
-from transcribe import Transcriber
+from Transcription.transcribe import Transcriber
 
-segments = Transcriber.transcribe_with_timestamps("audio.wav")
-for seg in segments:
-    print(f"[{seg['start']:.2f}s → {seg['end']:.2f}s] {seg['text']}")
+segments = Transcriber.transcribe_with_timestamps(
+    audio_path="audio.wav",
+    model_size="base",  # tiny/base/small/medium/large
+    verbose=False
+)
+# [{"start": 0.0, "end": 3.5, "text": "Hello world"}, ...]
 ```
 
-### LLM Integration (`llm.py`)
+#### LLM Integration (`LLM/llm.py`)
 
-Smart clip analysis and selection:
+**Uses:** OpenRouter API for GPT-4o-mini
 
 ```python
-from llm import LLM
+from LLM.llm import LLM
 
 llm = LLM()
 response = llm.generate_text(
-    prompt="Analyze these video clips...",
-    model="openai/gpt-4o-mini"
+    prompt="Your prompt here",
+    model="openai/gpt-4o-mini",
+    max_tokens=2000,
+    temperature=0.3
 )
 ```
 
@@ -259,9 +243,14 @@ See `requirements.txt` for complete list.
 
 ## Troubleshooting
 
-### YOLO Model Not Found
+### YOLO Model Download
 
-Ensure `yolov8n.pt` is in the `models/` folder. The model will be downloaded automatically on first use if the ultralytics package is installed correctly.
+The YOLOv8 model (`yolov8n.pt`) is **automatically downloaded** on first run by the Ultralytics package. You don't need to manually download it.
+
+If you encounter issues:
+- Ensure you have internet connection on first run
+- The model (~6MB) downloads to Ultralytics cache
+- Check firewall settings if download fails
 
 ### FFmpeg Not Found
 

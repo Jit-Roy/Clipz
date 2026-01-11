@@ -51,10 +51,19 @@ class ClipVideo:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         model_path = os.path.join(base_dir, model_dir, "yolov8n.pt")
         
-        if not os.path.exists(model_path):
-            raise FileNotFoundError(f"YOLO model not found at {model_path}. Please ensure yolov8n.pt is in the '{model_dir}' folder.")
-        
-        self.yolo = YOLO(model_path)
+        # YOLO will auto-download if model doesn't exist
+        # Just pass the model name and ultralytics handles it
+        if os.path.exists(model_path):
+            print(f"[INIT] Loading YOLO from: {model_path}")
+            self.yolo = YOLO(model_path)
+        else:
+            print(f"[INIT] YOLO model not found at {model_path}")
+            print("[INIT] Downloading yolov8n.pt from Ultralytics (first run only)...")
+            # Ultralytics will auto-download to its cache if we just pass the model name
+            self.yolo = YOLO("yolov8n.pt")
+            # Save to local models folder for future use
+            os.makedirs(os.path.join(base_dir, model_dir), exist_ok=True)
+            print(f"[INIT] YOLO model downloaded successfully!")
         
         # Use relative cache directory for Hugging Face models
         hf_cache_dir = os.path.join(base_dir, ".cache", "huggingface")
