@@ -1,6 +1,5 @@
 import torch
 import whisper
-import os
 import json
 import hashlib
 from pathlib import Path

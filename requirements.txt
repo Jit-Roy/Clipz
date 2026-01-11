@@ -1,37 +1,22 @@
-# Core Dependencies
-numpy>=1.24.0
-scipy>=1.10.0
-opencv-python>=4.8.0
-librosa>=0.10.0
-soundfile>=0.12.0
-
-# Deep Learning
-torch>=2.0.0
-torchvision>=0.15.0
-transformers>=4.30.0
-tensorflow-hub>=0.15.0
-
-# Video Processing
-moviepy>=1.0.3
-ffmpeg-python>=0.2.0
-ultralytics>=8.0.0
-
-# Audio & Speech Analysis
-whisper>=1.0.0
-openai-whisper>=20231117
-praat-parselmouth>=0.4.3
-ruptures>=1.1.9
-
-# Computer Vision
-dlib>=19.24.0
-Pillow>=10.0.0
-
-# LLM Integration
-requests>=2.31.0
-python-dotenv>=1.0.0
-
-# Utilities
-tqdm>=4.65.0
-
-# Optional: For visualization
-matplotlib>=3.7.0
+numpy==2.0.2
+scipy==1.16.3
+opencv-python==4.12.0
+librosa==0.11.0
+soundfile==0.13.1
+torch==2.9.1
+torchvision==0.24.1
+transformers==4.57.3
+tensorflow==2.20.0
+tensorflow-hub==0.16.1
+moviepy==2.1.2
+ffmpeg-python==0.2.0
+ultralytics==8.3.250
+openai-whisper==20231117
+praat-parselmouth==0.4.7
+ruptures==1.1.10
+dlib==20.0.0
+Pillow==11.3.0
+requests==2.32.5
+python-dotenv==1.2.1
+tqdm==4.67.1
+matplotlib==3.10.8

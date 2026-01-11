@@ -1,15 +1,10 @@
 import os
 import warnings
-
-# Suppress all warnings
 warnings.filterwarnings("ignore")
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-
-# Suppress TensorFlow warnings before import
 import logging
 logging.getLogger('tensorflow').setLevel(logging.ERROR)
-
 import numpy as np
 import librosa
 import scipy.signal as signal
@@ -21,12 +16,9 @@ from parselmouth.praat import call
 import hashlib
 from tqdm import tqdm
 import matplotlib.pyplot as plt
-
 import tensorflow as tf
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-
 import tensorflow_hub as hub
-import soundfile as sf
 
 
 class ClipAudio:

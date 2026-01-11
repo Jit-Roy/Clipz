@@ -14,11 +14,7 @@ import subprocess
 from tqdm import tqdm
 from datetime import datetime
 import warnings
-
-# Suppress warnings
 warnings.filterwarnings("ignore")
-
-# Import custom modules
 from audio import ClipAudio
 from video import ClipVideo
 from transcribe import Transcriber
